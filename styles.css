@@ -1,0 +1,50 @@
+body {
+    display: flex;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    margin: 0;
+    position: relative;
+}
+#menu {
+    width: 200px;
+    padding: 10px;
+    border-right: 1px solid #ccc;
+    overflow-y: auto;
+}
+#resultado {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    max-height: calc(100vh - 40px);
+}
+.musica-item {
+    cursor: pointer;
+    padding: 5px;
+    margin: 5px 0;
+    border: 1px solid transparent;
+}
+.musica-item:hover {
+    background-color: #f0f0f0;
+}
+#menuSuspenso {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    z-index: 100;
+}
+#aumentarTom, #diminuirTom {
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin: 5px 0;
+}
+#aumentarTom:hover, #diminuirTom:hover {
+    background-color: #0056b3;
+}
