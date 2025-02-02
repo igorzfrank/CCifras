@@ -1,4 +1,5 @@
 let songs = [];
+let favoriteSongs = new Set(); // Usar um Set para armazenar músicas favoritas
 
 async function loadSongs() {
   try {
@@ -10,7 +11,19 @@ async function loadSongs() {
     songs.forEach((song) => {
       const li = document.createElement("li");
       li.textContent = song.titulo;
+
+      // Criar botão de favoritar
+      const favoriteButton = document.createElement("button");
+      favoriteButton.textContent = favoriteSongs.has(song.titulo)
+        ? "Desfavoritar"
+        : "Favoritar";
+      favoriteButton.onclick = (e) => {
+        e.stopPropagation(); // Impedir que o clique no botão abra a música
+        toggleFavorite(song.titulo, favoriteButton);
+      };
+
       li.onclick = () => displaySong(song);
+      li.appendChild(favoriteButton);
       songList.appendChild(li);
     });
   } catch (error) {
@@ -35,8 +48,25 @@ const chords = [
 const minorChords = chords.map((c) => c + "m");
 
 function displaySong(song) {
-  document.getElementById("currentKey").textContent = "C";
-  document.getElementById("songDisplay").innerHTML = song.cifras;
+  // Definir o tom atual como o tom original da música
+  document.getElementById("currentKey").textContent = song.tomOriginal;
+
+  // Calcular o passo para transpor a cifra para o tom original
+  const currentKey = "C"; // Considerando que o tom inicial é C
+  const step = chords.indexOf(song.tomOriginal) - chords.indexOf(currentKey);
+
+  // Atualizar a exibição da cifra para o tom original
+  const transposedCifras = updateChordsForDisplay(song.cifras, step);
+  document.getElementById("songDisplay").innerHTML = transposedCifras;
+}
+
+// Função auxiliar para atualizar as cifras para o tom desejado
+function updateChordsForDisplay(cifras, step) {
+  const chordRegex = /<b>([A-G]#?(m?)(?:\/[A-G]#?)?)<\/b>/g;
+
+  return cifras.replace(chordRegex, (match, chord) => {
+    return `<b>${shiftChord(chord, step)}</b>`;
+  });
 }
 
 function transpose(step) {
@@ -85,6 +115,16 @@ function setKey(newKey) {
   updateChords(newKey, step);
 }
 
+function toggleFavorite(songTitle, button) {
+  if (favoriteSongs.has(songTitle)) {
+    favoriteSongs.delete(songTitle);
+    button.textContent = "Favoritar";
+  } else {
+    favoriteSongs.add(songTitle);
+    button.textContent = "Desfavoritar";
+  }
+}
+
 function filterSongs() {
   const searchInput = document
     .getElementById("searchInput")
@@ -93,10 +133,24 @@ function filterSongs() {
   songList.innerHTML = "";
 
   songs.forEach((song) => {
-    if (song.titulo.toLowerCase().includes(searchInput)) {
+    const isFavorite = favoriteSongs.has(song.titulo);
+    const matchesSearch = song.titulo.toLowerCase().includes(searchInput);
+
+    // Mostrar a música se corresponder à busca ou se for favorita
+    if (matchesSearch || isFavorite) {
       const li = document.createElement("li");
       li.textContent = song.titulo;
+
+      // Criar botão de favoritar
+      const favoriteButton = document.createElement("button");
+      favoriteButton.textContent = isFavorite ? "Desfavoritar" : "Favoritar";
+      favoriteButton.onclick = (e) => {
+        e.stopPropagation(); // Impedir que o clique no botão abra a música
+        toggleFavorite(song.titulo, favoriteButton);
+      };
+
       li.onclick = () => displaySong(song);
+      li.appendChild(favoriteButton);
       songList.appendChild(li);
     }
   });
