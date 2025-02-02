@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teste de Cifras</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="sidebar">
+      <h3>Músicas</h3>
+      <input type="text" id="searchInput" placeholder="Buscar músicas..." onkeyup="filterSongs()">
+      <ul id="songList" class="song-list"></ul>
+    </div>
+    <div class="main">
+      <div class="overlay">
+        <div class="controls">
+          <button onclick="transpose(-1)">Baixar Tom</button>
+          <button onclick="transpose(1)">Subir Tom</button>
+          <button onclick="setKey('C')">C</button>
+          <button onclick="setKey('D')">D</button>
+          <button onclick="setKey('E')">E</button>
+          <button onclick="setKey('F')">F</button>
+          <button onclick="setKey('G')">G</button>
+          <button onclick="setKey('A')">A</button>
+          <button onclick="setKey('B')">B</button>
+          <span>Tom Atual: <b id="currentKey">C</b></span>
+        </div>
+      </div>
+      <pre id="songDisplay"></pre>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

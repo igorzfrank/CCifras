@@ -1,29 +1,30 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Busca de Músicas</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Arquivo de estilos -->
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Arquivo de estilos -->
+  </head>
+  <body>
+    <div id="menu">
+      <h2>Buscar Música</h2>
+      <input type="text" id="busca" placeholder="Digite o nome da música..." />
+      <div id="listaMusicas"></div>
+    </div>
 
-<div id="menu">
-    <h2>Buscar Música</h2>
-    <input type="text" id="busca" placeholder="Digite o nome da música...">
-    <div id="listaMusicas"></div>
-</div>
+    <div id="resultado">
+      <h2>Música Selecionada</h2>
+      <div id="cifras"></div>
+    </div>
 
-<div id="resultado">
-    <h2>Música Selecionada</h2>
-    <div id="cifras"></div>
-</div>
+    <div id="menuSuspenso">
+      <button id="aumentarTom" onclick="transpose(1)">Aumentar Tom</button>
+      <button id="diminuirTom" onclick="transpose(-1)">Diminuir Tom</button>
+    </div>
 
-<div id="menuSuspenso">
-    <button id="aumentarTom" onclick="transpose(1)">Aumentar Tom</button>
-    <button id="diminuirTom" onclick="transpose(-1)">Diminuir Tom</button>
-</div>
-
-<script src="script.js"></script> <!-- Arquivo JavaScript -->
-</body>
+    <script src="script.js"></script>
+    <!-- Arquivo JavaScript -->
+  </body>
 </html>
