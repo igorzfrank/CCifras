@@ -1,5 +1,19 @@
 let songs = [];
 let favoriteSongs = new Set(); // Usar um Set para armazenar músicas favoritas
+let capoPosition = 0; // Inicialmente sem capotraste
+
+function updateCapo() {
+  const capoSelector = document.getElementById("capoSelector");
+  capoPosition = parseInt(capoSelector.value, 10); // Obter a posição do capotraste
+
+  const currentKey = document.getElementById("currentKey").textContent;
+  const step = capoPosition; // O número de casas do capotraste equivale ao número de tons a baixar
+
+  // Atualizar o tom atual considerando o capotraste
+  const newKey = shiftChord(currentKey, -step); // Baixar o tom
+  document.getElementById("currentKey").textContent = newKey;
+  updateChords(newKey, -step); // Atualizar as cifras
+}
 
 async function loadSongs() {
   try {
@@ -74,6 +88,10 @@ function transpose(step) {
   const newKey = shiftChord(currentKey, step);
   document.getElementById("currentKey").textContent = newKey;
   updateChords(newKey, step);
+  
+  // Resetar o capo para 0
+  capoPosition = 0; // Adicione esta linha
+  document.getElementById("capoSelector").value = 0; // Atualiza o seletor do capo
 }
 
 function changeKey() {
